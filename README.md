@@ -5,6 +5,7 @@ Easily update author names and emails across all commits in a repository.
 
 ![GitHub License](https://img.shields.io/badge/license-MIT-blue)
 ![Node.js Version](https://img.shields.io/badge/node-%3E%3D%2016.0.0-green)
+![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-lightgrey)
 
 ---
 
@@ -13,6 +14,9 @@ Easily update author names and emails across all commits in a repository.
 ✅ Simple configuration via `mailmap.txt`  
 ✅ Supports multiple mappings for different authors  
 ✅ Lightweight and fast  
+✅ Automatic escaping of special characters  
+✅ Dry-run mode for testing  
+✅ Cross-platform support (Linux, Windows, macOS)  
 
 ---
 
@@ -62,6 +66,12 @@ Navigate to your Git repository and run:
 npx ts-node path/to/git-reauthor/src/index.ts
 ```
 
+Alternatively, if installed globally:
+
+```bash
+git-reauthor --mailmap ./mailmap.txt
+```
+
 ### 3️⃣ Verify Changes
 Check the updated Git history:
 
@@ -108,6 +118,20 @@ Developer <dev@org.com> coder123 <dev@legacy.org>
 ```
 
 ---
+
+## 💻 Platform Support
+
+### Linux
+#### `Fully supported. No additional setup required.`
+
+### Windows
+#### `Run in Git Bash or WSL (Windows Subsystem for Linux) for POSIX shell support.`
+
+### macOS
+#### `Fully supported. No additional setup required.`
+
+---
+
 
 ## 📜 License
 This project is licensed under the **MIT License**.
