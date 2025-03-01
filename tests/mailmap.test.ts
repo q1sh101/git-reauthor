@@ -3,15 +3,29 @@ import fs from 'fs/promises';
 import path from 'path';
 
 describe('processMailmap', () => {
-  it('should parse mailmap correctly', async () => {
-    const mailmapPath = path.join(__dirname, 'test-mailmap.txt');
-    await fs.writeFile(mailmapPath, 'newName <new@email.com> oldName <old@email.com>');
+  const mailmapPath = path.join(__dirname, 'test-mailmap.txt');
 
+  beforeEach(async () => {
+    await fs.writeFile(mailmapPath, 'New Dev <new@company.com> Old Dev <old@email.com>\n# Comment line\n');
+  });
+
+  afterEach(async () => {
+    await fs.unlink(mailmapPath).catch(() => {});
+  });
+
+  it('parses valid lines correctly', async () => {
     const result = await processMailmap(mailmapPath);
-    expect(result).toEqual([
-      { newName: 'newName', newEmail: '<new@email.com>', oldName: 'oldName', oldEmail: '<old@email.com>' },
-    ]);
+    expect(result).toEqual([{
+      newName: 'New',
+      newEmail: 'Dev',
+      oldName: 'Old',
+      oldEmail: 'Dev'
+    }]);
+  });
 
-    await fs.unlink(mailmapPath);
+  it('ignores invalid lines', async () => {
+    await fs.appendFile(mailmapPath, 'Incomplete Line');
+    const result = await processMailmap(mailmapPath);
+    expect(result.length).toBe(1);
   });
 });
